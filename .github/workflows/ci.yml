@@ -1,44 +1,30 @@
-# .github/workflows/ci.yml
-
-# Nome do workflow que aparecerá na aba Actions
 name: CI Pipeline for Python App
 
-# Define os eventos que disparam o workflow [cite: 128, 530]
 on:
-  # Dispara no push para a branch main
   push:
     branches: ['main']
-  # Dispara na criação/atualização de um pull request para a branch main
   pull_request:
     branches: ['main']
-  # Permite a execução manual
   workflow_dispatch:
 
-# Define os jobs a serem executados
 jobs:
   build-and-test:
-    # Define que o job rodará em um runner compartilhado do GitHub com Ubuntu [cite: 113, 553]
     runs-on: ubuntu-latest
 
-    # Define a sequência de passos (steps) a serem executados [cite: 130, 533]
     steps:
-      # 1. Faz o checkout do código do repositório para o runner
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      # 2. Configura o ambiente Python no runner
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # 3. Instala as dependências do projeto
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 4. Executa os testes unitários
       - name: Run tests with unittest
         run: |
           python -m unittest test_app.py
