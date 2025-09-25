@@ -50,7 +50,6 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/projeto-ci-cd-api-tarefas:latest,${{ secrets.DOCKERHUB_USERNAME }}/projeto-ci-cd-api-tarefas:${{ github.run_number }}
-          # Remove imagens antigas com o mesmo nome
           provenance: false
 
   deploy:
@@ -64,5 +63,4 @@ jobs:
         run: |
           echo "Iniciando o deploy..."
           # Adicione aqui os comandos para fazer o deploy na sua nuvem de escolha
-          # Exemplo: ssh -i ${{ secrets.SSH_PRIVATE_KEY }} user@host "docker pull ${{ secrets.DOCKERHUB_USERNAME }}/projeto-ci-cd-api-tarefas:${{ github.run_number }} && docker-compose up -d"
           echo "Deploy concluído!"
