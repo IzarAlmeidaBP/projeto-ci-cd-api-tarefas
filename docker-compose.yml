@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  web:
+    image: izar8787/projeto-ci-cd-api-tarefas:latest
+    ports:
+      - '5000:5000'
+    restart: always
