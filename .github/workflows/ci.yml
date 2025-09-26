@@ -10,7 +10,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -33,7 +32,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -56,7 +54,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-push-image
     environment: production
-
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -68,18 +65,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Instala o Docker e Docker Compose (caso ainda não esteja instalado)
             sudo apt-get update
             sudo apt-get install -y docker.io docker-compose
-
-            # Adiciona o usuário 'ubuntu' ao grupo do docker para rodar sem 'sudo'
-            sudo usermod -aG docker ${{ secrets.SSH_USER }}
-
-            # Puxa a versão mais recente da imagem do Docker Hub
-            docker pull izar8787/projeto-ci-cd-api-tarefas:latest
-
-            # Copia o docker-compose.yml para o servidor
+            sudo docker pull izar8787/projeto-ci-cd-api-tarefas:latest
             cat docker-compose.yml > ~/docker-compose.yml
-
-            # Executa a aplicação usando o Docker Compose em modo detached
-            docker-compose -f ~/docker-compose.yml up -d
+            sudo docker-compose -f ~/docker-compose.yml up -d
